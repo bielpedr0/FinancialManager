@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# Financial Manager - Gestor de Finanças Pessoais
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+![React.js](https://img.shields.io/badge/Frontend-React-61DAFB?style=flat&logo=react)
+![Spring Boot](https://img.shields.io/badge/Backend-Spring%20Boot-6DB33F?style=flat&logo=spring)
+![Java](https://img.shields.io/badge/Language-Java-orange?style=flat&logo=java)
 
-## Available Scripts
+## 📌 Sobre o Projeto
 
-In the project directory, you can run:
+O **Financial Manager** é uma aplicação web desenvolvida como Trabalho de Conclusão de Curso (TCC) com o objetivo de auxiliar no gerenciamento financeiro pessoal. A ferramenta permite que os usuários registrem e monitorem suas receitas e despesas de forma intuitiva, oferecendo uma visão clara de sua saúde financeira.
 
-### `npm start`
+Este projeto visa não apenas fornecer uma solução tecnológica, mas também promover a educação financeira e o planejamento econômico entre os usuários, contribuindo para a redução do endividamento e a construção de um futuro financeiro mais seguro.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🚀 Tecnologias Utilizadas
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+O projeto é dividido em duas partes principais, o Front-end e o Back-end.
 
-### `npm test`
+### Front-end
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **React:** Biblioteca JavaScript para construção da interface do usuário.
 
-### `npm run build`
+### Back-end
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Java Spring Boot:** Framework para o desenvolvimento do servidor e da API REST.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🔧 Como Executar o Projeto
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Para rodar este projeto em sua máquina local, siga os passos abaixo. Você precisará do **Node.js** (para o Front-end) e do **Java** (para o Back-end) instalados.
 
-### `npm run eject`
+### Back-end (Java Spring)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1.  Clone o repositório do projeto:
+    ```bash
+    git clone [https://github.com/SEU-USUARIO/FinancialManager-Backend.git](https://github.com/SEU-USUARIO/FinancialManager-Backend.git)
+    ```
+2.  Navegue até a pasta do projeto:
+    ```bash
+    cd FinancialManager-Backend
+    ```
+3.  Configure as credenciais do banco de dados no arquivo `src/main/resources/application.properties`.
+4.  Execute a aplicação usando sua IDE favorita (IntelliJ, VS Code) ou pelo terminal com Maven:
+    ```bash
+    ./mvnw spring-boot:run
+    ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Front-end (React)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1.  Navegue até a pasta do Front-end:
+    ```bash
+    cd gestor-financas
+    ```
+2.  Instale as dependências:
+    ```bash
+    npm install
+    ```
+3.  Inicie a aplicação:
+    ```bash
+    npm start
+    ```
+4.  A aplicação estará disponível em `http://localhost:3000`.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## 👨‍💻 Autores
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Gabriel Pedro** - Desenvolvedor Front-end
+- **Tiago Narita** - Desenvolvedor Back-end
