@@ -1,6 +1,5 @@
 # Financial Manager - Gestor de Finanças Pessoais
 
-![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![React.js](https://img.shields.io/badge/Frontend-React-61DAFB?style=flat&logo=react)
 ![Spring Boot](https://img.shields.io/badge/Backend-Spring%20Boot-6DB33F?style=flat&logo=spring)
 ![Java](https://img.shields.io/badge/Language-Java-orange?style=flat&logo=java)
