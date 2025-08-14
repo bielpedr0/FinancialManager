@@ -26,27 +26,11 @@ O projeto é dividido em duas partes principais, o Front-end e o Back-end.
 
 Para rodar este projeto em sua máquina local, siga os passos abaixo. Você precisará do **Node.js** (para o Front-end) e do **Java** (para o Back-end) instalados.
 
-### Back-end (Java Spring)
-
-1.  Clone o repositório do projeto:
-    ```bash
-    git clone [https://github.com/SEU-USUARIO/FinancialManager-Backend.git](https://github.com/SEU-USUARIO/FinancialManager-Backend.git)
-    ```
-2.  Navegue até a pasta do projeto:
-    ```bash
-    cd FinancialManager-Backend
-    ```
-3.  Configure as credenciais do banco de dados no arquivo `src/main/resources/application.properties`.
-4.  Execute a aplicação usando sua IDE favorita (IntelliJ, VS Code) ou pelo terminal com Maven:
-    ```bash
-    ./mvnw spring-boot:run
-    ```
-
 ### Front-end (React)
 
 1.  Navegue até a pasta do Front-end:
     ```bash
-    cd gestor-financas
+    cd FinancialManager
     ```
 2.  Instale as dependências:
     ```bash
@@ -61,5 +45,5 @@ Para rodar este projeto em sua máquina local, siga os passos abaixo. Você prec
 
 ## 👨‍💻 Autores
 
-- **Gabriel Pedro** - Desenvolvedor Front-end
-- **Tiago Narita** - Desenvolvedor Back-end
+- **Gabriel Pedro** - Desenvolvedor 
+- **Tiago Narita** - Desenvolvedor
