@@ -62,7 +62,7 @@ const Resumo = () => {
 
   return (
     <div>
-      <h1>Resumo Financeiro</h1>
+      <h2>Resumo Financeiro</h2>
 
       <div className="summary-container">
         <div className="summary-card summary-income">
