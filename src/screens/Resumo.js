@@ -1,64 +1,121 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import TransactionCard from '../components/TransactionCard';
-import ExpensePieChart from '../components/ExpensePieChart'; // Importe o componente de gráfico
+import ExpensePieChart from '../components/ExpensePieChart';
+import BalanceLineChart from '../components/BalanceLineChart';
 import { useFinances } from '../context/FinancesContext';
+import './Resumo.css';
 
 const Resumo = () => {
   const { transactions, loading, error, totalIncome, totalExpense, currentBalance } = useFinances();
+  const [filter, setFilter] = useState('all');
 
-     // CÁLCULO DOS DADOS PARA O GRÁFICO
+  const getFilteredTransactions = (period) => {
+    const today = new Date();
+    let startDate;
+    switch (period) {
+      case 'last7days':
+        startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+        break;
+      case 'last30days':
+        startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 30);
+        break;
+      case 'lastYear':
+        startDate = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+        break;
+      default:
+        return transactions;
+    }
+    return transactions.filter(t => new Date(t.date) >= startDate);
+  };
+
+  const filteredTransactions = useMemo(() => getFilteredTransactions(filter), [transactions, filter]);
+
   const pieChartData = useMemo(() => {
-    // Agrupa as despesas por categoria
-    const expensesByCategory = transactions
+    const expensesByCategory = filteredTransactions
       .filter(t => t.type === 'expense')
-      .reduce((acc, transaction) => {
-        const { category, value } = transaction;
+      .reduce((acc, { category, value }) => {
         acc[category] = (acc[category] || 0) + value;
         return acc;
       }, {});
-    
-    // Converte o objeto para um array de objetos no formato { name: 'Categoria', value: 100 }
     return Object.keys(expensesByCategory).map(category => ({
       name: category,
       value: expensesByCategory[category],
     }));
-  }, [transactions]);
+  }, [filteredTransactions]);
 
-  if (loading) return <p style={{ textAlign: 'center', padding: '2rem' }}>Carregando resumo financeiro...</p>;
-  if (error) return <p style={{ textAlign: 'center', padding: '2rem', color: 'red' }}>Erro ao carregar dados: {error.message}</p>;
+  const balanceChartData = useMemo(() => {
+    let balance = currentBalance - filteredTransactions.reduce((acc, t) => acc + (t.type === 'expense' ? t.value : -t.value), 0);
+    const sortedTransactions = [...filteredTransactions].sort((a, b) => new Date(a.date) - new Date(b.date));
+    return sortedTransactions.map(t => {
+      balance += t.type === 'income' ? t.value : -t.value;
+      return {
+        date: new Date(t.date).toLocaleDateString('pt-BR'),
+        balance
+      };
+    });
+  }, [filteredTransactions, currentBalance]);
 
-  const latestTransactions = transactions.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
+  if (loading) return <p className="loading">Carregando resumo financeiro...</p>;
+  if (error) return <p className="error">Erro ao carregar dados: {error.message}</p>;
+
+  const latestTransactions = filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
 
   return (
     <div>
-      <h1 style={{ marginTop: '2rem' }}>Resumo Financeiro</h1> 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
-          <div style={{ padding: '1.5rem', borderRadius: '8px', backgroundColor: '#e6ffe6', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-            <h3 style={{ margin: 0, color: '#333' }}>Receitas Totais</h3>
-            <p style={{ fontSize: '1.8rem', fontWeight: 'bold', color: 'green' }}>R$ {totalIncome.toFixed(2).replace('.', ',')}</p>
-          </div>
-          <div style={{ padding: '1.5rem', borderRadius: '8px', backgroundColor: '#ffe6e6', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-            <h3 style={{ margin: 0, color: '#333' }}>Despesas Totais</h3>
-            <p style={{ fontSize: '1.8rem', fontWeight: 'bold', color: 'red' }}>R$ {totalExpense.toFixed(2).replace('.', ',')}</p>
-          </div>
-          <div style={{ padding: '1.5rem', borderRadius: '8px', backgroundColor: '#e6f7ff', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-            <h3 style={{ margin: 0, color: '#333' }}>Saldo Atual</h3>
-            <p style={{ fontSize: '1.8rem', fontWeight: 'bold', color: currentBalance >= 0 ? 'darkgreen' : 'darkred' }}>R$ {currentBalance.toFixed(2).replace('.', ',')}</p>
-          </div>
+      <h1>Resumo Financeiro</h1>
+
+      <div className="summary-container">
+        <div className="summary-card summary-income">
+          <h3 className="summary-title">Receitas Totais</h3>
+          <p className="summary-value income">R$ {totalIncome.toFixed(2).replace('.', ',')}</p>
         </div>
+        <div className="summary-card summary-expense">
+          <h3 className="summary-title">Despesas Totais</h3>
+          <p className="summary-value expense">R$ {totalExpense.toFixed(2).replace('.', ',')}</p>
+        </div>
+        <div className="summary-card summary-balance">
+          <h3 className="summary-title">Saldo Atual</h3>
+          <p className={`summary-value ${currentBalance >= 0 ? 'positive' : 'negative'}`}>
+            R$ {currentBalance.toFixed(2).replace('.', ',')}
+          </p>
+        </div>
+      </div>
 
-        <h2>Últimas Transações</h2>
-        {latestTransactions.length > 0 ? (
-          latestTransactions.map(transaction => (
-            <TransactionCard key={transaction.id} transaction={transaction} />
-          ))
-        ) : (
-          <p>Nenhuma transação recente encontrada.</p>
-        )}
+      <h2>Últimas Transações</h2>
+      {latestTransactions.length > 0 ? (
+        latestTransactions.map(transaction => (
+          <TransactionCard key={transaction.id} transaction={transaction} />
+        ))
+      ) : (
+        <p>Nenhuma transação recente encontrada.</p>
+      )}
 
-      <h2>Distribuição de Despesas por Categoria</h2>
-      <div style={{ padding: '1.5rem', backgroundColor: '#f9f9f9', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-        <ExpensePieChart data={pieChartData} />
+      <h2>Evolução do Saldo</h2>
+      <div className="filter-buttons">
+        {[
+          { id: 'all', label: 'Todos' },
+          { id: 'last7days', label: 'Últimos 7 dias' },
+          { id: 'last30days', label: 'Últimos 30 dias' },
+          { id: 'lastYear', label: 'Último ano' }
+        ].map(btn => (
+          <button
+            key={btn.id}
+            className={`filter-button ${filter === btn.id ? 'active' : ''}`}
+            onClick={() => setFilter(btn.id)}
+          >
+            {btn.label}
+          </button>
+        ))}
+      </div>
+
+      <h2>Gráficos</h2>
+      <div className="charts-container">
+        <div className="chart-card">
+          <BalanceLineChart data={balanceChartData} />
+        </div>
+        <div className="chart-card">
+          <ExpensePieChart data={pieChartData} />
+        </div>
       </div>
     </div>
   );

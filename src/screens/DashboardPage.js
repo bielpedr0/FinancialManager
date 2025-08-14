@@ -51,7 +51,7 @@ const DashboardPage = () => {
         borderBottom: '1px solid #dee2e6'
       }}>
         <button style={tabButtonStyle('resumo')} onClick={() => setActiveTab('resumo')}>
-          Resumo
+          Painel
         </button>
         <button style={tabButtonStyle('novo')} onClick={() => setActiveTab('novo')}>
           Novo Gasto
@@ -65,9 +65,10 @@ const DashboardPage = () => {
       </nav>
 
       {/* Conteúdo da aba selecionada */}
-      <div style={{ padding: '0 2rem 2rem 2rem', maxWidth: '900px', margin: '0 auto' }}>
-        {renderContent()}
-      </div>
+    <div style={{ padding: '0 2rem 2rem 2rem', width: '100%' }}>
+     {renderContent()}
+    </div>
+
     </div>
   );
 };
