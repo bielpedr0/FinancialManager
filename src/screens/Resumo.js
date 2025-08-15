@@ -61,7 +61,7 @@ const Resumo = () => {
   const latestTransactions = filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
 
   return (
-    <div>
+    <div style={{ padding: '1rem', maxWidth: '1600px', margin: '0 auto' }}>
       <h2>Resumo Financeiro</h2>
 
       <div className="summary-container">

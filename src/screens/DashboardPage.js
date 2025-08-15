@@ -11,11 +11,16 @@ const DashboardPage = () => {
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'resumo': return <Resumo />;
-      case 'novo': return <NovoGasto />;
-      case 'historico': return <Historico />;
-      case 'perfil': return <Perfil />;
-      default: return <Resumo />;
+      case 'resumo':
+        return <Resumo />;
+      case 'novo':
+        return <NovoGasto />;
+      case 'historico':
+        return <Historico />;
+      case 'perfil':
+        return <Perfil />;
+      default:
+        return <Resumo />;
     }
   };
 

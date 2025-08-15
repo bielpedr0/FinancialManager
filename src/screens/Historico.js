@@ -24,9 +24,10 @@ const Historico = () => {
     .sort((a, b) => new Date(b.date) - new Date(a.date)); // Mais recentes primeiro
 
   return (
-    <div>
-      <Header title="Histórico de Transações" />
-      <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>
+    <div style={{ padding: '1rem', maxWidth: '1600px', margin: '0 auto' }}>
+      <h2>Histórico de Transações </h2> 
+
+      <div >
         {/* Filtros e Busca */}
         <div style={{ marginBottom: '1.5rem', display: 'flex', gap: '1rem', alignItems: 'flex-end' }}>
           <div style={{ flexGrow: 1 }}>

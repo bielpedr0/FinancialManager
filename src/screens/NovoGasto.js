@@ -79,9 +79,9 @@ const NovoGasto = () => {
   };
 
   return (
-    <div>
-      <Header title="Adicionar Nova Transação" />
-      <div style={{ padding: '2rem', maxWidth: '600px', margin: '0 auto', backgroundColor: '#f9f9f9', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+    <div style={{ padding: '1rem', maxWidth: '1600px', margin: '0 auto' }}>
+      <h2>Adicionar Transação</h2>
+      <div style={{ padding: '2rem', maxWidth: '1600px', margin: '0 auto', backgroundColor: '#f9f9f9', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '1rem' }}>
             <label htmlFor="type" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Tipo:</label>

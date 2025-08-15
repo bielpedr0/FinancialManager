@@ -38,8 +38,8 @@ const Perfil = () => {
   };
 
   return (
-    <div>
-      <Header title="Meu Perfil" />
+    <div style={{ padding: '1rem', maxWidth: '1600px', margin: '0 auto' }}>
+      <h2>Meu Perfil</h2>
       <div style={{ padding: '2rem', maxWidth: '600px', margin: '0 auto', backgroundColor: '#f9f9f9', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
         <h2 style={{ marginBottom: '1.5rem', color: '#333' }}>Informações do Usuário</h2>
 
