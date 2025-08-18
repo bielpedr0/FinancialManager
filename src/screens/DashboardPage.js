@@ -6,6 +6,7 @@ import NovoGasto from './NovoGasto';
 import Historico from './Historico';
 import Perfil from './Perfil';
 
+
 const DashboardPage = () => {
   const [activeTab, setActiveTab] = useState('resumo');
 
@@ -58,7 +59,11 @@ const DashboardPage = () => {
       <div className="content">
         {renderContent()}
       </div>
+     <footer>
+      <p>&copy; 2025 Desenvolvido por Gabriel Pedro Alves e Tiago Narita. Todos os direitos reservados.</p>
+    </footer>
     </div>
+    
   );
 };
 
