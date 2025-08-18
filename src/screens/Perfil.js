@@ -13,7 +13,8 @@ const Perfil = () => {
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const photoURL = URL.createObjectURL(file); // cria URL temporária da imageme
+      const photoURL = URL.createObjectURL(file); // cria URL temporária da imagem
+      setUser((prev) => ({ ...prev, photo: photoURL }));
     }
   };
 

@@ -62,7 +62,7 @@ const Configuracoes = () => {
       <section className="config-section">
         <h2>Sobre o aplicativo</h2>
         <p>Versão: 1.0.0</p>
-        <p>Desenvolvido por Gabriel Alves</p>
+        <p>Desenvolvido por Gabriel Alves e Tiago Narita</p>
       </section>
 
       {/* Botão */}
