@@ -20,9 +20,11 @@ const Configuracoes = () => {
   };
 
   return (
-    <div className="config-page">
+    <div className="config-page"  style={{ padding: '1rem', maxWidth: '1600px', margin: '0 auto' }}>
+           <h2>Configurações Gerais</h2> 
+           
       {/* Perfil */}
-      <section className="config-section">
+      <section className="config-section" >
         <h2>Perfil</h2>
         <input
           type="text"
