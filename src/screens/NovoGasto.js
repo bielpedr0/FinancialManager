@@ -50,7 +50,7 @@ const NovoGasto = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Primeiro, desformatamos o valor para poder fazer a validação e conversão
@@ -73,9 +73,15 @@ const NovoGasto = () => {
       value: numericValue
     };
 
-    addTransaction(transactionToSave);
-    alert('Transação adicionada com sucesso!');
-    navigate('/');
+    try {
+      await addTransaction(transactionToSave);
+      alert('Transação adicionada com sucesso!');
+      navigate('/'); // Navega para a página inicial após o sucesso
+    } catch (error) {
+      // O erro já é logado no context, aqui podemos apenas notificar o usuário.
+      console.error("Erro ao adicionar transação:", error);
+      alert(`Não foi possível adicionar a transação: ${error.message || 'Erro desconhecido.'}`);
+    }
   };
 
   return (
