@@ -12,7 +12,9 @@ export const FinancesProvider = ({ children }) => {
   const { token, isLoggedIn, logout } = useAuth(); // Get token, login status, and logout function
   const [transactions, setTransactions] = useState([]);
   const [summary, setSummary] = useState({ totalIncome: 0, totalExpense: 0, balance: 0 });
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingCategories, setLoadingCategories] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchFinancialData = useCallback(async () => {
@@ -94,6 +96,27 @@ export const FinancesProvider = ({ children }) => {
     fetchFinancialData();
   }, [fetchFinancialData]);
 
+  const fetchCategories = useCallback(async (type) => {
+    if (!token || !type) {
+      setCategories([]);
+      return;
+    }
+    setLoadingCategories(true);
+    try {
+      const api = axios.create({
+        baseURL: API_URL,
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      const response = await api.get(`/categorias?tipo=${type.toUpperCase()}`);
+      setCategories(response.data || []);
+    } catch (e) {
+      console.error("Failed to fetch categories:", e);
+      setCategories([]); // Limpa categorias em caso de erro
+    } finally {
+      setLoadingCategories(false);
+    }
+  }, [token]);
+
   const addTransaction = async (newTransaction) => {
     if (!token) {
       setError("Token de autenticação não encontrado.");
@@ -105,13 +128,11 @@ export const FinancesProvider = ({ children }) => {
         headers: { 'Authorization': `Bearer ${token}` },
       });
 
-      // Mapeia o objeto do frontend para o formato que a API espera ao criar uma transação
       const transactionForApi = {
         descricao: newTransaction.description,
         valor: newTransaction.value,
-        data: newTransaction.date,
-        categoriaNome: newTransaction.category,
-        tipo: newTransaction.type.toUpperCase(), // 'income' -> 'INCOME'
+        data: new Date(newTransaction.date).toISOString(),
+        categoriaId: newTransaction.categoryId,
       };
       await api.post('/transactions', transactionForApi);
 
@@ -140,6 +161,9 @@ export const FinancesProvider = ({ children }) => {
         totalIncome: summary.totalIncome,
         totalExpense: summary.totalExpense,
         currentBalance: summary.balance,
+        categories,
+        loadingCategories,
+        fetchCategories,
       }}
     >
       {children}

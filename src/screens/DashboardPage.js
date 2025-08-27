@@ -37,7 +37,7 @@ const DashboardPage = () => {
 
   return (
     <div>
-      <Header title="Gestor de Finanças" />
+      <Header title="Gestor de Finanças" onProfileClick={() => setActiveTab('perfil')} />
 
       <nav className="nav">
         {tabs.map((tab) => (
