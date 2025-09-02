@@ -1,30 +1,76 @@
+/* Paleta base (altere --color-primary se quiser outra cor) */
+:root {
+  --color-primary: #00796b;      /* verde do sistema */
+  --text-color: #333;
+  --nav-bg: #ffffff;
+  --nav-border: #e5e7eb;
+}
+
+/* Barra de navegação das abas */
 .nav {
   display: flex;
+  align-items: center;
   justify-content: center;
-  background-color: #e9ecef;
-  padding-top: 10px;
-  border-bottom: 1px solid #dee2e6;
+  gap: 8px;
+  background-color: var(--nav-bg);
+  padding: 8px 16px 0;
+  border-bottom: 1px solid var(--nav-border);
+  overflow-x: auto;        /* rolagem horizontal se tiver muitas abas */
+  scrollbar-width: none;   /* Firefox: esconde a barra */
 }
+.nav::-webkit-scrollbar { display: none; } /* Chrome/Safari */
 
+/* Botão de aba: estilo “underline” moderno */
 .tabButton {
-  padding: 0.8rem 1.5rem;
+  appearance: none;
+  background: transparent;
   border: none;
-  background-color: #f0f0f0;
-  color: #333;
+  border-bottom: 2px solid transparent;
+  color: var(--text-color);
   cursor: pointer;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 5px 5px 0 0;
-  margin-right: 5px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  font: 600 1rem/1 'Poppins', sans-serif;
+  padding: 0.9rem 1.1rem;
+  white-space: nowrap;
+  transition: color 0.2s ease, border-color 0.2s ease, transform 0.08s ease;
 }
 
+/* Hover e foco acessíveis */
+.tabButton:hover {
+  color: var(--color-primary);
+  border-bottom-color: rgba(0, 121, 107, 0.35);
+}
+.tabButton:focus-visible {
+  outline: none;
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  box-shadow: 0 2px 0 rgba(0, 121, 107, 0.25);
+}
+
+/* Aba ativa */
 .tabButtonActive {
-  background-color: #007bff;
-  color: white;
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
 }
 
+/* Estado desabilitado */
+.tabButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Conteúdo das abas */
 .content {
   padding: 0 2rem 2rem 2rem;
   width: 100%;
+}
+
+/* Responsivo */
+@media (max-width: 640px) {
+  .tabButton {
+    padding: 0.8rem 0.9rem;
+    font-size: 0.95rem;
+  }
+  .content {
+    padding: 0.75rem 1rem 1.25rem;
+  }
 }

@@ -1,17 +1,25 @@
+// src/components/Header.jsx
 import React from 'react';
+import './Header.css';
+import logo from '../assets/logo192.png';
 
-const Header = ({ title }) => {
+// ✅ O componente agora recebe a foto do usuário
+const Header = ({ title, userPhoto, onProfileClick }) => {
   return (
-    <header style={{
-      backgroundColor: '#294296ff',
-      padding: '1rem 2rem',
-      borderBottom: '1px solid #ddd',
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center'
-    }}>
-      <h2 style={{ margin: 0, color: '#fff' }}>{title}</h2>
-      {/* Futuramente, aqui pode ter um botão de perfil ou logout */}
+    <header className="header">
+      <div className="logo-container">
+        <img src={logo} alt="Logo" className="logo" />
+        <h1 className="header-title">{title}</h1>
+      </div>
+      
+      <div className="profile-icon" onClick={onProfileClick}>
+        <img 
+          // ✅ Usa a foto da propriedade ou um placeholder
+          src={userPhoto || "https://via.placeholder.com/40"}
+          alt="Perfil" 
+          className="profile-picture" 
+        />
+      </div>
     </header>
   );
 };

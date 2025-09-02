@@ -53,7 +53,7 @@ const DashboardPage = () => {
 
       <div className="content">{renderContent()}</div>
 
-      <footer>
+      <footer >
         <p>
           &copy; 2025 Desenvolvido por Gabriel Pedro Alves e Tiago Narita. Todos os direitos
           reservados.

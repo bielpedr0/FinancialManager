@@ -1,4 +1,4 @@
-// src/screens/Perfil.jsx
+import './Perfil.css';
 import React, { useState, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 
@@ -15,115 +15,23 @@ const Perfil = () => {
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const photoURL = URL.createObjectURL(file); // cria URL temporária da imagem
+      const photoURL = URL.createObjectURL(file);
       setUser((prev) => ({ ...prev, photo: photoURL }));
     }
   };
-  
+
   const fileInputRef = useRef(null);
 
-  const styles = {
-    pageContainer: {
-      padding: '1rem',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    title: {
-      textAlign: 'center',
-      marginBottom: '2rem',
-      color: '#2c3e50',
-      fontWeight: '600',
-    },
-    profileCard: {
-      padding: '2.5rem',
-      width: '100%',
-      maxWidth: '900px',
-      backgroundColor: '#ffffff',
-      borderRadius: '12px',
-      boxShadow: '0 6px 25px rgba(0, 0, 0, 0.07)',
-      display: 'flex',
-      flexDirection: 'row',
-      gap: '3rem',
-      flexWrap: 'wrap',
-    },
-    photoSection: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      gap: '1rem',
-      flex: 1,
-      minWidth: '200px',
-    },
-    photoCircle: {
-      width: '150px',
-      height: '150px',
-      borderRadius: '50%',
-      backgroundColor: '#e9ecef',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      overflow: 'hidden',
-      border: '4px solid #fff',
-      boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-    },
-    photo: {
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover',
-    },
-    uploadButton: {
-      padding: '0.5rem 1rem',
-      backgroundColor: '#007bff',
-      color: 'white',
-      border: 'none',
-      borderRadius: '5px',
-      cursor: 'pointer',
-      fontSize: '0.9rem',
-    },
-    infoSection: {
-      flex: 2,
-      minWidth: '300px',
-    },
-    infoGroup: {
-      marginBottom: '1.2rem',
-    },
-    infoLabel: {
-      fontWeight: 'bold',
-      color: '#34495e',
-      display: 'block',
-      marginBottom: '0.25rem',
-    },
-    infoValue: {
-      color: '#555',
-      fontSize: '1.05rem',
-    },
-    logoutButton: {
-      marginTop: '2.5rem',
-      width: '100%',
-      padding: '0.85rem',
-      backgroundColor: '#e74c3c',
-      color: 'white',
-      border: 'none',
-      borderRadius: '8px',
-      cursor: 'pointer',
-      fontSize: '1rem',
-      fontWeight: '600',
-      textAlign: 'center',
-      transition: 'background-color 0.2s ease',
-    }
-  };
-
   return (
-    <div style={styles.pageContainer}>
-      <h2 style={styles.title}>Meu Perfil</h2>
-      <div style={styles.profileCard}>
-        <div style={styles.photoSection}>
-          <div style={styles.photoCircle}>
+    <div className="page-container">
+      <h2 className="title">Meu Perfil</h2>
+      <div className="profile-card">
+        <div className="photo-section">
+          <div className="photo-circle">
             {user.photo ? (
-              <img src={user.photo} alt="Foto de perfil" style={styles.photo} />
+              <img src={user.photo} alt="Foto de perfil" className="photo" />
             ) : (
-              <span style={{ fontSize: '3rem', color: '#666' }}>👤</span>
+              <span className="placeholder-icon">👤</span>
             )}
           </div>
           <input
@@ -133,17 +41,17 @@ const Perfil = () => {
             onChange={handlePhotoChange}
             style={{ display: 'none' }}
           />
-          <button onClick={() => fileInputRef.current.click()} style={styles.uploadButton}>
+          <button onClick={() => fileInputRef.current.click()} className="upload-button">
             Alterar Foto
           </button>
         </div>
 
-        <div style={styles.infoSection}>
-          <div style={styles.infoGroup}><span style={styles.infoLabel}>Nome:</span><span style={styles.infoValue}>{user.name}</span></div>
-          <div style={styles.infoGroup}><span style={styles.infoLabel}>Email:</span><span style={styles.infoValue}>{user.email}</span></div>
-          <div style={styles.infoGroup}><span style={styles.infoLabel}>Plano:</span><span style={styles.infoValue}>{user.plan}</span></div>
-          <div style={styles.infoGroup}><span style={styles.infoLabel}>Membro desde:</span><span style={styles.infoValue}>{new Date(user.registeredSince).toLocaleDateString()}</span></div>
-          <button onClick={logout} style={styles.logoutButton} className="logout-button-hover">
+        <div className="info-section">
+          <div className="info-group"><span className="info-label">Nome:</span><span className="info-value">{user.name}</span></div>
+          <div className="info-group"><span className="info-label">Email:</span><span className="info-value">{user.email}</span></div>
+          <div className="info-group"><span className="info-label">Plano:</span><span className="info-value">{user.plan}</span></div>
+          <div className="info-group"><span className="info-label">Membro desde:</span><span className="info-value">{new Date(user.registeredSince).toLocaleDateString()}</span></div>
+          <button onClick={logout} className="logout-button logout-button-hover">
             Sair da Conta
           </button>
         </div>
