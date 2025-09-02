@@ -5,7 +5,8 @@ import Resumo from './Resumo';
 import NovoGasto from './NovoGasto';
 import Historico from './Historico';
 import Perfil from './Perfil';
-import Configuracoes from './Configuracoes'; // ✅ nova aba
+import Configuracoes from './Configuracoes';
+import Sobre from './Sobre'; // ✅ Importa o novo componente
 
 const DashboardPage = () => {
   const [activeTab, setActiveTab] = useState('resumo');
@@ -21,7 +22,9 @@ const DashboardPage = () => {
       case 'perfil':
         return <Perfil />;
       case 'config':
-        return <Configuracoes />; // ✅ nova opção
+        return <Configuracoes />;
+      case 'sobre': // ✅ Nova opção no switch
+        return <Sobre />;
       default:
         return <Resumo />;
     }
@@ -32,7 +35,8 @@ const DashboardPage = () => {
     { key: 'novo', label: 'Novo Gasto' },
     { key: 'historico', label: 'Histórico' },
     { key: 'perfil', label: 'Perfil' },
-    { key: 'config', label: 'Configurações' }, // ✅ nova aba
+    { key: 'config', label: 'Configurações' },
+    { key: 'sobre', label: 'Sobre' }, // ✅ Nova aba
   ];
 
   return (
@@ -53,7 +57,7 @@ const DashboardPage = () => {
 
       <div className="content">{renderContent()}</div>
 
-      <footer >
+      <footer>
         <p>
           &copy; 2025 Desenvolvido por Gabriel Pedro Alves e Tiago Narita. Todos os direitos
           reservados.
