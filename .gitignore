@@ -1,0 +1,58 @@
+# Front-end
+# dependências
+/Frontend/node_modules
+/Frontend/.pnp
+/Frontend/.pnp.js
+
+# testes
+/Frontend/coverage
+
+# produção
+/Frontend/build
+
+# arquivos misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Back-end
+# Ignora arquivos do Gradle e dependências
+/Backend/.gradle
+/Backend/build/
+!/Backend/gradle/wrapper/gradle-wrapper.jar
+!/Backend/**/src/main/**/build/
+!/Backend/**/src/test/**/build/
+
+# Ignora arquivos de IDEs (IntelliJ, STS, VS Code)
+/Backend/.apt_generated
+/Backend/.classpath
+/Backend/.factorypath
+/Backend/.project
+/Backend/.settings
+/Backend/.springBeans
+/Backend/.sts4-cache
+/Backend/bin/
+!/Backend/**/src/main/**/bin/
+!/Backend/**/src/test/**/bin/
+/Backend/.idea
+/Backend/*.iws
+/Backend/*.iml
+/Backend/*.ipr
+/Backend/out/
+!/Backend/**/src/main/**/out/
+!/Backend/**/src/test/**/out/
+/Backend/nbproject/private/
+/Backend/nbbuild/
+/Backend/dist/
+/Backend/nbdist/
+/Backend/.nb-gradle/
+/Backend/.vscode/
+
+# Ignora arquivos de configuração sensíveis
+/Backend/src/main/resources/application.properties
