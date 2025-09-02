@@ -20,8 +20,11 @@ const Configuracoes = () => {
   };
 
   return (
+    <div >
+       <h2>Configurações Gerais</h2> 
+    
     <div className="config-page"  style={{ padding: '1rem', maxWidth: '1600px', margin: '0 auto' }}>
-           <h2>Configurações Gerais</h2> 
+          
            
       {/* Perfil */}
       <section className="config-section" >
@@ -71,6 +74,7 @@ const Configuracoes = () => {
       <button className="config-button" onClick={salvar}>
         Salvar Alterações
       </button>
+    </div>
     </div>
   );
 };

@@ -1,13 +1,38 @@
-/* Estilo padrão (claro) */
+/* Paleta de Cores (Versão Clara) */
+:root {
+  --background-color: #f0f2f5;
+  --card-bg: #ffffff;
+  --text-dark: #2c3e50;
+  --text-medium: #34495e;
+  --border-color: #e5e7eb;
+  --primary-blue: #007bff;
+}
+
+/* Paleta de Cores (Versão Escura) */
+body.dark {
+  --background-color: #1a1a1a;
+  --card-bg: #2d2d2d;
+  --text-dark: #f0f0f0;
+  --text-medium: #e0e0e0;
+  --border-color: #4a4a4a;
+  --primary-blue: #6aa8fc;
+}
+
 body {
-  background: #f8f8f8;
-  color: #333;
+  background: var(--background-color);
+  color: var(--text-medium);
   font-family: Arial, sans-serif;
   transition: background 0.3s, color 0.3s;
 }
 
+/* Container principal da página de configurações */
 .config-page {
   padding: 20px;
+  max-width: 800px;
+  margin: 2rem auto;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 .config-section {
@@ -15,15 +40,26 @@ body {
 }
 
 .config-section h2 {
-  font-size: 18px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
   margin-bottom: 10px;
 }
 
 .config-input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-dark);
   border-radius: 8px;
+  transition: border-color 0.2s;
+}
+
+.config-input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
 .config-switch {
@@ -33,7 +69,7 @@ body {
 }
 
 .config-button {
-  background-color: #007bff;
+  background-color: var(--primary-blue);
   color: #fff;
   border: none;
   padding: 12px 18px;
@@ -44,26 +80,10 @@ body {
 }
 
 .config-button:hover {
-  background-color: #0056b3;
+  background-color: #0056b3; /* Cor de hover para a versão clara */
 }
 
-/* Dark mode */
-body.dark {
-  background: #222;
-  color: #f8f8f8;
-}
-
-body.dark .config-input {
-  background: #333;
-  color: #fff;
-  border: 1px solid #555;
-}
-
-body.dark .config-button {
-  background-color: #444;
-  color: #fff;
-}
-
+/* Estilos de Botão para o Modo Escuro */
 body.dark .config-button:hover {
-  background-color: #666;
+  background-color: #5587d1; /* Cor de hover para a versão escura */
 }
