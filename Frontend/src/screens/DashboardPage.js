@@ -6,7 +6,8 @@ import NovoGasto from './NovoGasto';
 import Historico from './Historico';
 import Perfil from './Perfil';
 import Configuracoes from './Configuracoes';
-import Sobre from './Sobre'; // ✅ Importa o novo componente
+import Sobre from './Sobre';
+import FaleConosco from './FaleConosco';
 
 const DashboardPage = () => {
   const [activeTab, setActiveTab] = useState('resumo');
@@ -25,6 +26,8 @@ const DashboardPage = () => {
         return <Configuracoes />;
       case 'sobre': // ✅ Nova opção no switch
         return <Sobre />;
+         case 'fale conosco': // ✅ Nova opção no switch
+        return <FaleConosco />;
       default:
         return <Resumo />;
     }
@@ -34,9 +37,10 @@ const DashboardPage = () => {
     { key: 'resumo', label: 'Painel' },
     { key: 'novo', label: 'Novo Gasto' },
     { key: 'historico', label: 'Histórico' },
-    { key: 'perfil', label: 'Perfil' },
+    // { key: 'perfil', label: 'Perfil' },
     { key: 'config', label: 'Configurações' },
-    { key: 'sobre', label: 'Sobre' }, // ✅ Nova aba
+    { key: 'sobre', label: 'Sobre' }, 
+    { key: 'fale conosco', label: 'Fale Conosco' }, 
   ];
 
   return (
