@@ -32,7 +32,7 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      {/* Versão original, protegida por login:
+      Versão original, protegida por login:
       <Route
         path="/login"
         element={!isLoggedIn ? <LoginScreen /> : <Navigate to="/" replace />}
@@ -43,11 +43,11 @@ const AppRoutes = () => {
 isLoggedIn ? <DashboardPage /> : <Navigate to="/login" replace />
         }
       />
-      */}
+     
 
       {/* Versão temporária, para acesso direto ao dashboard: */}
-      <Route path="/login" element={<LoginScreen />} />
-      <Route path="/*" element={<DashboardPage />} />
+      {/* <Route path="/login" element={<LoginScreen />} />
+      <Route path="/*" element={<DashboardPage />} /> */}
     </Routes>
   );
 };

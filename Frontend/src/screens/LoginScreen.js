@@ -1,15 +1,16 @@
-// src/screens/LoginScreen.jsx
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import { Navigate } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Importa os ícones de olho
 
 const LoginScreen = () => {
   const { login, isLoggedIn, loading, error } = useAuth();
-  const [isLoginView, setIsLoginView] = useState(true); // Alterna entre login e cadastro
+  const [isLoginView, setIsLoginView] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   if (isLoggedIn) {
     return <Navigate to="/" replace />;
@@ -53,15 +54,31 @@ const LoginScreen = () => {
             placeholder="Digite seu email"
             required
           />
-          <Input
-            label="Senha:"
-            id="password"
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            placeholder="Digite sua senha"
-            required
-          />
+            <div style={{ position: 'relative' }}>
+    <Input
+      label="Senha:"
+      id="password"
+      type={showPassword ? 'text' : 'password'}
+      value={password}
+      onChange={e => setPassword(e.target.value)}
+      placeholder="Digite sua senha"
+      required
+    />
+    <span
+      onClick={() => setShowPassword(!showPassword)}
+      style={{
+        position: 'absolute',
+        right: '10px',
+        top: '55%',
+        //transform: 'translateY(-50%)',
+        cursor: 'pointer',
+        color: '#888',
+        zIndex: 10,
+      }}
+    >
+      {showPassword ? <FaEyeSlash /> : <FaEye />}
+    </span>
+  </div>
           {error && <p style={{ color: 'red', textAlign: 'center', marginTop: '1rem' }}>{error}</p>}
           <Button type="submit" style={{ width: '100%', marginTop: '1rem' }} disabled={loading}>
             {loading ? 'Carregando...' : (isLoginView ? 'Entrar' : 'Cadastrar')}
