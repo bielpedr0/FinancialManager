@@ -7,6 +7,8 @@ import './Resumo.css';
 
 const Resumo = () => {
   const { transactions, loading, error, totalIncome, totalExpense, currentBalance } = useFinances();
+
+  
   const [filter, setFilter] = useState('all');
 
   const getFilteredTransactions = (period) => {

@@ -7,7 +7,6 @@ const Perfil = () => {
   const [user, setUser] = useState({
     name: 'Nome do Usuário',
     email: 'usuario@exemplo.com',
-    plan: 'Básico (Gratuito)',
     registeredSince: '2025-06-01',
     photo: null, // foto de perfil
   });
@@ -49,7 +48,6 @@ const Perfil = () => {
         <div className="info-section">
           <div className="info-group"><span className="info-label">Nome:</span><span className="info-value">{user.name}</span></div>
           <div className="info-group"><span className="info-label">Email:</span><span className="info-value">{user.email}</span></div>
-          <div className="info-group"><span className="info-label">Plano:</span><span className="info-value">{user.plan}</span></div>
           <div className="info-group"><span className="info-label">Membro desde:</span><span className="info-value">{new Date(user.registeredSince).toLocaleDateString()}</span></div>
           <button onClick={logout} className="logout-button logout-button-hover">
             Sair da Conta

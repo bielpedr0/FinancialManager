@@ -4,7 +4,6 @@ import "./Configuracoes.css";
 const Configuracoes = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [moeda, setMoeda] = useState("R$");
-  const [nome, setNome] = useState("Gabriel");
 
   // Aplica ou remove o dark mode no body
   useEffect(() => {
@@ -25,18 +24,6 @@ const Configuracoes = () => {
     
     <div className="config-page"  style={{ padding: '1rem', maxWidth: '1600px', margin: '0 auto' }}>
           
-           
-      {/* Perfil */}
-      <section className="config-section" >
-        <h2>Perfil</h2>
-        <input
-          type="text"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          placeholder="Seu nome"
-          className="config-input"
-        />
-      </section>
 
       {/* Tema */}
       <section className="config-section">
