@@ -1,5 +1,6 @@
+// src/pages/FaleConosco.jsx
 import React, { useState } from "react";
-
+import './FaleConosco.css'; // Importe o CSS aqui
 
 const FaleConosco = () => {
   const [nome, setNome] = useState("");
@@ -12,55 +13,53 @@ const FaleConosco = () => {
       return;
     }
 
-    const destinatario = "Tiagobnarita@gmail.com"; // seu e-mail de contato
+    const destinatario = "Tiagobnarita@gmail.com";
     const assunto = encodeURIComponent("Mensagem do aplicativo");
     const corpo = encodeURIComponent(
       `Nome: ${nome}\nE-mail: ${email}\n\nMensagem:\n${mensagem}`
     );
 
-    // abre o cliente de e-mail do usuário
     window.location.href = `mailto:${destinatario}?subject=${assunto}&body=${corpo}`;
   };
 
   return (
-    <div className="config-container">
+    <div className="contact-container">
       <h2>Fale Conosco</h2>
-      <div className="config-page">
-        
-        <section className="config-section">
+      <div className="contact-form-card">
+        <section className="form-section">
           <label>Nome</label>
           <input
             type="text"
             value={nome}
             onChange={(e) => setNome(e.target.value)}
             placeholder="Seu nome"
-            className="config-input"
+            className="form-input"
           />
         </section>
 
-        <section className="config-section">
+        <section className="form-section">
           <label>E-mail</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="seuemail@email.com"
-            className="config-input"
+            className="form-input"
           />
         </section>
 
-        <section className="config-section">
+        <section className="form-section">
           <label>Mensagem</label>
           <textarea
             value={mensagem}
             onChange={(e) => setMensagem(e.target.value)}
             placeholder="Digite sua mensagem..."
             rows="5"
-            className="config-input"
+            className="form-textarea"
           />
         </section>
 
-        <button className="config-button" onClick={enviarMensagem}>
+        <button className="submit-button" onClick={enviarMensagem}>
           Enviar Mensagem
         </button>
       </div>

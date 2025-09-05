@@ -1,0 +1,95 @@
+/* src/pages/FaleConosco.css */
+
+/* Paleta de Cores (Versão Clara) */
+:root {
+  --background-color: #f0f2f5;
+  --card-bg: #ffffff;
+  --text-dark: #2c3e50;
+  --text-medium: #34495e;
+  --border-color: #e5e7eb;
+  --primary-blue: #007bff;
+}
+
+/* Container da página */
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  min-height: calc(100vh - 80px); /* Ajustado para a altura do header/footer */
+  background-color: var(--background-color);
+  font-family: Arial, sans-serif;
+  color: var(--text-dark);
+}
+
+.contact-container h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Card do formulário */
+.contact-form-card {
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.form-section {
+  margin-bottom: 1.5rem;
+}
+
+.form-section label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-medium);
+  margin-bottom: 0.5rem;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-dark);
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.form-textarea {
+  resize: vertical;
+}
+
+/* Botão de envio */
+.submit-button {
+  width: 100%;
+  background-color: var(--primary-blue);
+  color: #fff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
