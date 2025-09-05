@@ -26,7 +26,8 @@ const DashboardPage = () => {
       case 'config':
         return <Configuracoes />;
       case 'sobre':
-        return <Sobre />;
+        // Passa a função para o componente Sobre
+        return <Sobre onContactClick={() => setActiveTab('fale conosco')} />;
       case 'fale conosco':
         return <FaleConosco />;
       default:
@@ -45,7 +46,6 @@ const DashboardPage = () => {
 
   return (
     <div>
-      {/* Passe a função setActiveTab para o onLogoClick */}
       <Header 
         title="Gestor de Finanças" 
         onProfileClick={() => setActiveTab('perfil')} 
