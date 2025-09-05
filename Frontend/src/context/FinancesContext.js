@@ -12,12 +12,12 @@ export const FinancesProvider = ({ children }) => {
   const { token, isLoggedIn, logout } = useAuth(); // Get token, login status, and logout function
   const [transactions, setTransactions] = useState([]);
   const [summary, setSummary] = useState({ totalIncome: 0, totalExpense: 0, balance: 0 });
-  const [categories, setCategories] = useState([]);
+  const [allCategories, setAllCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [loadingCategories, setLoadingCategories] = useState(false);
+  const [loadingCategories, setLoadingCategories] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchFinancialData = useCallback(async () => {
+  const fetchAllData = useCallback(async () => {
     if (!isLoggedIn || !token) {
       setTransactions([]);
       setSummary({ totalIncome: 0, totalExpense: 0, balance: 0 });
@@ -34,14 +34,18 @@ export const FinancesProvider = ({ children }) => {
         headers: { 'Authorization': `Bearer ${token}` },
       });
 
+      // Busca todas as categorias de uma vez
+      const categoriesPromise = api.get('/categorias');
+
       const now = new Date();
       const month = now.getMonth() + 1; // JS months are 0-indexed
       const year = now.getFullYear();
 
       // Usa axios.all para buscar dados em paralelo
-      const [transactionsResponse, summaryResponse] = await axios.all([
+      const [transactionsResponse, summaryResponse, categoriesResponse] = await axios.all([
         api.get('/transactions'),
-        api.get(`/dashboard/summary?month=${month}&year=${year}`)
+        api.get(`/dashboard/summary?month=${month}&year=${year}`),
+        categoriesPromise
       ]);
 
       const transactionsData = transactionsResponse.data;
@@ -77,6 +81,13 @@ export const FinancesProvider = ({ children }) => {
       } else {
         throw new Error('Formato de dados de resumo inesperado da API.');
       }
+
+      const categoriesData = categoriesResponse.data;
+      if (categoriesData && Array.isArray(categoriesData)) {
+        setAllCategories(categoriesData);
+      } else {
+        setAllCategories([]);
+      }
     } catch (e) {
       // Se o erro for 401 ou 403, o token é inválido ou expirou.
       if (e.response && (e.response.status === 401 || e.response.status === 403)) {
@@ -89,33 +100,13 @@ export const FinancesProvider = ({ children }) => {
       console.error("Failed to fetch financial data:", e);
     } finally {
       setLoading(false);
+      setLoadingCategories(false);
     }
   }, [token, isLoggedIn, logout]);
 
   useEffect(() => {
-    fetchFinancialData();
-  }, [fetchFinancialData]);
-
-  const fetchCategories = useCallback(async (type) => {
-    if (!token || !type) {
-      setCategories([]);
-      return;
-    }
-    setLoadingCategories(true);
-    try {
-      const api = axios.create({
-        baseURL: API_URL,
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-      const response = await api.get(`/categorias?type=${type.toUpperCase()}`);
-      setCategories(response.data || []);
-    } catch (e) {
-      console.error("Failed to fetch categories:", e);
-      setCategories([]); // Limpa categorias em caso de erro
-    } finally {
-      setLoadingCategories(false);
-    }
-  }, [token]);
+    fetchAllData();
+  }, [fetchAllData]);
 
   const addTransaction = async (newTransaction) => {
     if (!token) {
@@ -137,7 +128,7 @@ export const FinancesProvider = ({ children }) => {
       await api.post('/transactions', transactionForApi);
 
       // Após adicionar com sucesso, busca os dados financeiros novamente para atualizar o painel
-      await fetchFinancialData();
+      await fetchAllData();
     } catch (e) {
       if (e.response && (e.response.status === 401 || e.response.status === 403)) {
         setError('Sua sessão expirou. Por favor, faça o login novamente.');
@@ -161,9 +152,8 @@ export const FinancesProvider = ({ children }) => {
         totalIncome: summary.totalIncome,
         totalExpense: summary.totalExpense,
         currentBalance: summary.balance,
-        categories,
+        allCategories,
         loadingCategories,
-        fetchCategories,
       }}
     >
       {children}

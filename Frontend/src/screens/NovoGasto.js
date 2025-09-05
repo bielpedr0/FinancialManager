@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import Header from '../components/Header';
+import React, { useState, useMemo } from 'react';
+
 import Input from '../components/Input';
 import Button from '../components/Button';
 import { useFinances } from '../context/FinancesContext';
@@ -18,7 +18,7 @@ const formatCurrency = (value) => {
 };
 
 const NovoGasto = () => {
-  const { addTransaction, fetchCategories, categories, loadingCategories } = useFinances();
+  const { addTransaction, allCategories, loadingCategories } = useFinances();
   const navigate = useNavigate();
 
   const [transaction, setTransaction] = useState({
@@ -29,11 +29,13 @@ const NovoGasto = () => {
     date: new Date().toISOString().slice(0, 10),
   });
 
-  useEffect(() => {
-    if (transaction.type) {
-      fetchCategories(transaction.type);
-    }
-  }, [transaction.type, fetchCategories]);
+  // Filtra as categorias com base no tipo de transação selecionado
+  const filteredCategories = useMemo(() => {
+    if (!allCategories) return [];
+    const typeToFilter = transaction.type.toUpperCase();
+    return allCategories.filter(cat => cat.tipo === typeToFilter);
+  }, [allCategories, transaction.type]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -143,7 +145,7 @@ const NovoGasto = () => {
               {loadingCategories ? (
                 <option disabled>Carregando...</option>
               ) : (
-                categories.map(cat => (
+                filteredCategories.map(cat => (
                   <option key={cat.id} value={cat.id}>{cat.nome}</option>
                 ))
               )}

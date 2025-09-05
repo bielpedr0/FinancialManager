@@ -15,6 +15,8 @@ const Historico = () => {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [year, setYear] = useState(new Date().getFullYear());
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [filterType, setFilterType] = useState('all'); // 'all', 'income', 'expense'
 
@@ -35,6 +37,8 @@ const Historico = () => {
         page: page,
         size: 10,
         sort: 'data,desc',
+        month: month,
+        year: year,
       });
 
       // Assumindo que o backend suporta estes parâmetros para filtro
@@ -77,7 +81,7 @@ const Historico = () => {
     } finally {
       setLoading(false);
     }
-  }, [page, debouncedSearchTerm, filterType, token, logout]);
+  }, [page, debouncedSearchTerm, filterType, token, logout, month, year]);
 
   // Efeito para aplicar o "debounce" no termo de busca
   useEffect(() => {
@@ -99,6 +103,15 @@ const Historico = () => {
   const handlePreviousPage = () => setPage(prev => Math.max(prev - 1, 0));
   const handleNextPage = () => setPage(prev => Math.min(prev + 1, totalPages - 1));
 
+  const months = [
+    { value: 1, label: 'Janeiro' }, { value: 2, label: 'Fevereiro' },
+    { value: 3, label: 'Março' }, { value: 4, label: 'Abril' },
+    { value: 5, label: 'Maio' }, { value: 6, label: 'Junho' },
+    { value: 7, label: 'Julho' }, { value: 8, label: 'Agosto' },
+    { value: 9, label: 'Setembro' }, { value: 10, label: 'Outubro' },
+    { value: 11, label: 'Novembro' }, { value: 12, label: 'Dezembro' },
+  ];
+
   const styles = {
     pageContainer: {
       padding: '1rem',
@@ -116,7 +129,7 @@ const Historico = () => {
       display: 'flex',
       flexWrap: 'wrap',
       gap: '1.5rem',
-      alignItems: 'flex-end',
+      alignItems: 'baseline',
       padding: '1.5rem',
       backgroundColor: '#fdfdfd',
       borderRadius: '8px',
@@ -181,7 +194,6 @@ const Historico = () => {
     },
   };
 
-  if (loading && page === 0) return <p style={{ textAlign: 'center', padding: '2rem' }}>Carregando histórico...</p>;
   if (error) return <p style={{ textAlign: 'center', padding: '2rem', color: 'red' }}>Erro ao carregar dados: {error.message}</p>;
 
   return (
@@ -198,6 +210,35 @@ const Historico = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Ex: Supermercado, Salário"
+            />
+          </div>
+          <div style={styles.filterGroup}>
+            <label htmlFor="month" style={styles.label}>Mês:</label>
+            <select
+              id="month"
+              value={month}
+              onChange={(e) => {
+                setMonth(e.target.value);
+                setPage(0);
+              }}
+              style={styles.select}
+            >
+              {months.map(m => (
+                <option key={m.value} value={m.value}>{m.label}</option>
+              ))}
+            </select>
+          </div>
+          <div style={styles.filterGroup}>
+            <label htmlFor="year" style={styles.label}>Ano:</label>
+            <Input
+              id="year"
+              type="number"
+              value={year}
+              onChange={(e) => {
+                setYear(e.target.value);
+                setPage(0);
+              }}
+              placeholder="Ano"
             />
           </div>
           <div style={styles.filterGroup}>
