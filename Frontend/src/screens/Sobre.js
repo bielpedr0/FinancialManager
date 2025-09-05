@@ -67,7 +67,7 @@ const Sobre = () => {
 
       <div style={styles.section}>
         <p style={styles.text}>
-          Agradecemos por usar nossa aplicação. Se tiver alguma dúvida ou sugestão, entre em contato através da sua aba de Configurações.
+          Agradecemos por usar nossa aplicação. Se tiver alguma dúvida ou sugestão, entre em contato através da sua aba Fale Conosco.
         </p>
       </div>
 

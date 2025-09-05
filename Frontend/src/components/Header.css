@@ -18,7 +18,10 @@
 }
 
 .logo {
-  height: 42px;
+  height: 40px; /* ou o tamanho desejado */
+  width: 40px; /* ou o tamanho desejado */
+  margin-right: 1rem;
+  cursor: pointer;
 }
 
 .header-title {
@@ -30,9 +33,27 @@
 
 .profile-icon {
   cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #007bff; /* Cor de fundo para o círculo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff; /* Cor do texto */
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
+.profile-initials {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 .profile-icon:hover {
   transform: scale(1.1);
 }

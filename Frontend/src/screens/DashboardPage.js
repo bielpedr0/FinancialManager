@@ -1,3 +1,4 @@
+// src/pages/DashboardPage.jsx
 import './Dashboard.css';
 import React, { useState } from 'react';
 import Header from '../components/Header';
@@ -24,9 +25,9 @@ const DashboardPage = () => {
         return <Perfil />;
       case 'config':
         return <Configuracoes />;
-      case 'sobre': // ✅ Nova opção no switch
+      case 'sobre':
         return <Sobre />;
-         case 'fale conosco': // ✅ Nova opção no switch
+      case 'fale conosco':
         return <FaleConosco />;
       default:
         return <Resumo />;
@@ -37,7 +38,6 @@ const DashboardPage = () => {
     { key: 'resumo', label: 'Painel' },
     { key: 'novo', label: 'Novo Gasto' },
     { key: 'historico', label: 'Histórico' },
-    // { key: 'perfil', label: 'Perfil' },
     { key: 'config', label: 'Configurações' },
     { key: 'sobre', label: 'Sobre' }, 
     { key: 'fale conosco', label: 'Fale Conosco' }, 
@@ -45,7 +45,12 @@ const DashboardPage = () => {
 
   return (
     <div>
-      <Header title="Gestor de Finanças" onProfileClick={() => setActiveTab('perfil')} />
+      {/* Passe a função setActiveTab para o onLogoClick */}
+      <Header 
+        title="Gestor de Finanças" 
+        onProfileClick={() => setActiveTab('perfil')} 
+        onLogoClick={() => setActiveTab('resumo')} 
+      />
 
       <nav className="nav">
         {tabs.map((tab) => (
