@@ -6,7 +6,6 @@ import Resumo from './Resumo';
 import NovoGasto from './NovoGasto';
 import Historico from './Historico';
 import Perfil from './Perfil';
-import Configuracoes from './Configuracoes';
 import Sobre from './Sobre';
 import FaleConosco from './FaleConosco';
 
@@ -23,10 +22,7 @@ const DashboardPage = () => {
         return <Historico />;
       case 'perfil':
         return <Perfil />;
-      case 'config':
-        return <Configuracoes />;
       case 'sobre':
-        // Passa a função para o componente Sobre
         return <Sobre onContactClick={() => setActiveTab('fale conosco')} />;
       case 'fale conosco':
         return <FaleConosco />;
@@ -39,7 +35,6 @@ const DashboardPage = () => {
     { key: 'resumo', label: 'Painel' },
     { key: 'novo', label: 'Novo Gasto' },
     { key: 'historico', label: 'Histórico' },
-    { key: 'config', label: 'Configurações' },
     { key: 'sobre', label: 'Sobre' }, 
     { key: 'fale conosco', label: 'Fale Conosco' }, 
   ];

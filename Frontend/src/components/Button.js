@@ -12,7 +12,7 @@ const Button = ({ children, onClick, type = 'button', variant = 'primary', ...pr
   };
 
   const primaryStyle = {
-    backgroundColor: '#007bff',
+    backgroundColor: '#00796b',
     color: 'white',
   };
 
