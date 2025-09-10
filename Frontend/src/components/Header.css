@@ -37,7 +37,7 @@
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
-  background-color: #007bff; /* Cor de fundo para o círculo */
+  background-color: #00796b; /* Cor de fundo para o círculo */
   display: flex;
   justify-content: center;
   align-items: center;
