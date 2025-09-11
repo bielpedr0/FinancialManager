@@ -7,9 +7,8 @@ import './Resumo.css';
 
 const Resumo = () => {
   const { transactions, loading, error, totalIncome, totalExpense, currentBalance } = useFinances();
-
-  
   const [filter, setFilter] = useState('all');
+  const [chartType, setChartType] = useState('balance'); // Novo estado para o seletor de gráfico
 
   const getFilteredTransactions = (period) => {
     const today = new Date();
@@ -46,6 +45,7 @@ const Resumo = () => {
   }, [filteredTransactions]);
 
   const balanceChartData = useMemo(() => {
+    // Cálculo do saldo como antes
     let balance = currentBalance - filteredTransactions.reduce((acc, t) => acc + (t.type === 'expense' ? t.value : -t.value), 0);
     const sortedTransactions = [...filteredTransactions].sort((a, b) => new Date(a.date) - new Date(b.date));
     return sortedTransactions.map(t => {
@@ -65,7 +65,7 @@ const Resumo = () => {
   return (
     <div style={{ padding: '1rem', maxWidth: '1600px', margin: '0 auto' }}>
       <h2>Resumo Financeiro</h2>
-
+      {/* Cards de resumo (receitas, despesas, saldo) */}
       <div className="summary-container">
         <div className="summary-card summary-income">
           <h3 className="summary-title">Receitas Totais</h3>
@@ -83,6 +83,9 @@ const Resumo = () => {
         </div>
       </div>
 
+      <hr />
+
+      {/* Seção de transações */}
       <h2>Últimas Transações</h2>
       {latestTransactions.length > 0 ? (
         latestTransactions.map(transaction => (
@@ -92,7 +95,10 @@ const Resumo = () => {
         <p>Nenhuma transação recente encontrada.</p>
       )}
 
-      <h2>Evolução do Saldo</h2>
+      <hr />
+
+      {/* Seletor de período */}
+      <h2>Filtro de Período</h2>
       <div className="filter-buttons">
         {[
           { id: 'all', label: 'Todos' },
@@ -110,14 +116,35 @@ const Resumo = () => {
         ))}
       </div>
 
+      <hr />
+
+      {/* Seletor de gráfico e renderização */}
       <h2>Gráficos</h2>
+      <div className="chart-selector">
+        <button
+          className={`filter-button ${chartType === 'balance' ? 'active' : ''}`}
+          onClick={() => setChartType('balance')}
+        >
+          Evolução do Saldo
+        </button>
+        <button
+          className={`filter-button ${chartType === 'expenses' ? 'active' : ''}`}
+          onClick={() => setChartType('expenses')}
+        >
+          Despesas por Categoria
+        </button>
+      </div>
+
       <div className="charts-container">
-        <div className="chart-card">
-          <BalanceLineChart data={balanceChartData} />
-        </div>
-        <div className="chart-card">
-          <ExpensePieChart data={pieChartData} />
-        </div>
+        {chartType === 'balance' ? (
+          <div className="chart-card">
+            <BalanceLineChart data={balanceChartData} />
+          </div>
+        ) : (
+          <div className="chart-card">
+            <ExpensePieChart data={pieChartData} />
+          </div>
+        )}
       </div>
     </div>
   );
