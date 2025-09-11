@@ -31,7 +31,6 @@ const Sobre = ({ onContactClick }) => {
 
       <hr className="divider" />
 
-      {/* Nova seção sobre o TCC e Colaboradores */}
       <div className="section">
         <h3 className="sub-title">Sobre o Projeto e os Colaboradores</h3>
         <p className="text">
@@ -46,7 +45,6 @@ const Sobre = ({ onContactClick }) => {
           <li><b>Fábio Feliciano:</b> Professor Orientador</li>
         </ul>
       </div>
-      {/* Fim da nova seção */}
 
       <div className="section">
         <p className="text">
