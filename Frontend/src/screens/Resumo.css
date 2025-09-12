@@ -63,9 +63,9 @@
 }
 
 .filter-button.active {
-  background-color: #007bff;
+  background-color: #00796b;
   color: white;
-  border-color: #007bff;
+  border-color: #00796b;
 }
 
 .charts-container {
@@ -82,4 +82,30 @@
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para o novo contêiner Flexbox */
+.chart-section-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os elementos quebrem a linha em telas pequenas */
+  gap: 2rem;
+  align-items: flex-start; /* Alinha os itens ao topo */
+}
+
+/* Estilo para o painel de filtro */
+.filter-panel {
+  flex: 0 0 200px; /* Garante que o painel de filtro tenha uma largura fixa, mas possa encolher */
+}
+
+/* Estilo para o contêiner do gráfico */
+.chart-content {
+  flex: 1; /* Permite que o conteúdo do gráfico ocupe o espaço restante */
+  min-width: 400px; /* Garante uma largura mínima para o gráfico */
+}
+
+/* Alterando os botões de filtro para vertical */
+.filter-buttons.vertical-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }

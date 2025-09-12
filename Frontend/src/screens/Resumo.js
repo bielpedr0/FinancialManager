@@ -98,55 +98,58 @@ const Resumo = () => {
       <hr />
 
       {/* Seletor de período */}
-      <h2>Filtro de Período</h2>
-      <div className="filter-buttons">
-        {[
-          { id: 'all', label: 'Todos' },
-          { id: 'last7days', label: 'Últimos 7 dias' },
-          { id: 'last30days', label: 'Últimos 30 dias' },
-          { id: 'lastYear', label: 'Último ano' }
-        ].map(btn => (
+      {/* Novo contêiner para o filtro e os gráficos */}
+    <div className="chart-section-container">
+      <div className="filter-panel">
+        <h2>Filtro de Período</h2>
+        <div className="filter-buttons vertical-buttons">
+          {[
+            { id: 'all', label: 'Todos' },
+            { id: 'last7days', label: 'Últimos 7 dias' },
+            { id: 'last30days', label: 'Últimos 30 dias' },
+            { id: 'lastYear', label: 'Último ano' }
+          ].map(btn => (
+            <button
+              key={btn.id}
+              className={`filter-button ${filter === btn.id ? 'active' : ''}`}
+              onClick={() => setFilter(btn.id)}
+            >
+              {btn.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="chart-content">
+        <h2>Gráficos</h2>
+        <div className="chart-selector">
           <button
-            key={btn.id}
-            className={`filter-button ${filter === btn.id ? 'active' : ''}`}
-            onClick={() => setFilter(btn.id)}
+            className={`filter-button ${chartType === 'balance' ? 'active' : ''}`}
+            onClick={() => setChartType('balance')}
           >
-            {btn.label}
+            Evolução do Saldo
           </button>
-        ))}
-      </div>
-
-      <hr />
-
-      {/* Seletor de gráfico e renderização */}
-      <h2>Gráficos</h2>
-      <div className="chart-selector">
-        <button
-          className={`filter-button ${chartType === 'balance' ? 'active' : ''}`}
-          onClick={() => setChartType('balance')}
-        >
-          Evolução do Saldo
-        </button>
-        <button
-          className={`filter-button ${chartType === 'expenses' ? 'active' : ''}`}
-          onClick={() => setChartType('expenses')}
-        >
-          Despesas por Categoria
-        </button>
-      </div>
-
-      <div className="charts-container">
-        {chartType === 'balance' ? (
-          <div className="chart-card">
-            <BalanceLineChart data={balanceChartData} />
-          </div>
-        ) : (
-          <div className="chart-card">
-            <ExpensePieChart data={pieChartData} />
-          </div>
-        )}
+          <button
+            className={`filter-button ${chartType === 'expenses' ? 'active' : ''}`}
+            onClick={() => setChartType('expenses')}
+          >
+            Despesas por Categoria
+          </button>
+        </div>
+        <div className="charts-container">
+          {chartType === 'balance' ? (
+            <div className="chart-card">
+              <BalanceLineChart data={balanceChartData} />
+            </div>
+          ) : (
+            <div className="chart-card">
+              <ExpensePieChart data={pieChartData} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
+  </div>
   );
 };
 
