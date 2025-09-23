@@ -33,7 +33,7 @@ const DashboardPage = () => {
 
   const tabs = [
     { key: 'resumo', label: 'Painel' },
-    { key: 'novo', label: 'Novo Gasto' },
+    { key: 'novo', label: 'Nova Transação' },
     { key: 'historico', label: 'Histórico' },
     { key: 'sobre', label: 'Sobre' }, 
     { key: 'fale conosco', label: 'Fale Conosco' }, 

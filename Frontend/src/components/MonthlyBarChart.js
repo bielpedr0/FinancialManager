@@ -18,6 +18,8 @@ const MonthlyBarChart = ({ data }) => {
           <Legend />
           <Bar dataKey="income" fill="#82ca9d" name="Receita" />
           <Bar dataKey="expense" fill="#ff8042" name="Despesa" />
+          
+          
         </BarChart>
       </ResponsiveContainer>
     </div>
