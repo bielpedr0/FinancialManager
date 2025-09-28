@@ -11,8 +11,8 @@ const Perfil = () => {
 
   // UseEffect para sincronizar o nome do estado local com o do contexto
   useEffect(() => {
-    if (user?.name) {
-      setName(user.name);
+    if (user?.nome) {
+      setName(user.nome);
     }
   }, [user]);
 
@@ -29,7 +29,7 @@ const Perfil = () => {
 
   const handleNameSave = () => {
     if (name.trim() !== '') {
-      updateUser({ name }); // Chama a função do contexto para atualizar o nome
+      updateUser({ nome: name }); // Chama a função do contexto para atualizar o nome
       setIsEditingName(false);
     }
   };
@@ -82,7 +82,7 @@ const Perfil = () => {
               </div>
             ) : (
               <div className="display-name-container">
-                <span className="info-value">{user.name}</span>
+                <span className="info-value">{user.nome}</span>
                 <button onClick={() => setIsEditingName(true)} className="edit-button">
                   <FaPencilAlt />
                 </button>

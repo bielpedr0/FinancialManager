@@ -36,17 +36,15 @@ export const AuthProvider = ({ children }) => {
 
       const data = response.data;
 
-      if (data.token) {
-        // Assumimos que o backend valida o email e a senha,
-        // e você pode buscar os dados do usuário após o login.
-        // Em um cenário real, o backend retornaria as informações do usuário aqui.
-        // Exemplo simulado de dados do usuário:
-        const userData = {
-          name: 'Nome do Usuário',
-          email: email,
-          registeredSince: '2025-06-01',
-          photo: null,
-        };
+      if (data && data.token) {
+        // Usa os dados do usuário retornados pelo backend
+        const userData = {
+          id: data.id, // Supondo que o ID também venha na resposta
+          nome: data.nome,
+          email: email,
+          // Se a data de cadastro vier, use-a, senão, use a data atual como fallback.
+          registeredSince: data.dataCadastro || new Date().toISOString(),
+        };
 
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(userData)); // Salva o objeto do usuário
@@ -57,13 +55,34 @@ export const AuthProvider = ({ children }) => {
         throw new Error('Token não encontrado na resposta do servidor.');
       }
     } catch (e) {
-      const errorMessage = e.response?.data?.message || e.message || 'Falha no login. Verifique suas credenciais.';
+      const errorMessage = e.response?.data?.message || e.response?.data || e.message || 'Falha no login. Verifique suas credenciais.';
       setError(errorMessage);
       console.error("Login failed:", e);
     } finally {
       setLoading(false);
     }
   };
+
+  const register = async (name, email, password) => {
+    setLoading(true);
+    setError(null);
+    try {
+      // O DTO espera: nome, email, senha
+      await axios.post(`${API_URL}/auth/register`, {
+        nome: name,
+        email: email,
+        senha: password,
+      });
+      // Se o registro for bem-sucedido, não fazemos login automático,
+      // apenas informamos o sucesso para o componente.
+    } catch (e) {
+      const errorMessage = e.response?.data || e.message || 'Falha no cadastro. Tente novamente.';
+      setError(errorMessage);
+      throw e; // Re-lança o erro para o componente poder tratá-lo
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const logout = () => {
     localStorage.removeItem('token');
@@ -82,7 +101,7 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
-  const value = { token, isLoggedIn, loading, error, login, logout, user, updateUser };
+  const value = { token, isLoggedIn, loading, error, login, logout, user, updateUser, register };
 
   return (
     <AuthContext.Provider value={value}>

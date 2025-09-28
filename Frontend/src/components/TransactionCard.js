@@ -1,31 +1,59 @@
-// src/components/TransactionCard.jsx
-import React from 'react';
+// src/components/TransactionCard.js
+import React, { useState, useRef, useEffect } from 'react';
+import './TransactionCard.css';
+import { FaEllipsisV, FaEdit, FaTrash } from 'react-icons/fa';
 
-const TransactionCard = ({ transaction }) => {
-  const isExpense = transaction.type === 'expense';
-  const valueColor = isExpense ? 'red' : 'green';
+const TransactionCard = ({ transaction, onEdit }) => {
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef(null);
+
+  const { id, type, description, value, category, date } = transaction;
+  const formattedValue = `R$ ${value.toFixed(2).replace('.', ',')}`;
+  const formattedDate = new Date(date).toLocaleDateString('pt-BR');
+  const isExpense = type === 'expense';
+
+  const handleEdit = () => {
+    onEdit(transaction);
+    setShowMenu(false);
+  };
+
+  const handleDelete = () => {
+    if (window.confirm(`Tem certeza que deseja excluir a transação "${description}"?`)) {
+      alert(`Excluir transação ID: ${id}`);
+    }
+    setShowMenu(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
-    <div style={{
-      border: '1px solid #eee',
-      borderRadius: '8px',
-      padding: '1rem',
-      marginBottom: '0.8rem',
-      backgroundColor: '#fff',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center'
-    }}>
-      <div>
-        <h4 style={{ margin: 0, color: '#333' }}>{transaction.description}</h4>
-        <p style={{ margin: '0.3rem 0', fontSize: '0.9rem', color: '#666' }}>
-          {transaction.category} - {new Date(transaction.date).toLocaleDateString()}
-        </p>
+    <div className={`transaction-card ${isExpense ? 'expense' : 'income'}`}>
+      <div className="transaction-details">
+        <span className="transaction-description">{description}</span>
+        <span className="transaction-category">{category} - {formattedDate}</span>
       </div>
-      <span style={{ fontWeight: 'bold', color: valueColor }}>
-        {isExpense ? '-' : '+'} R$ {transaction.value.toFixed(2).replace('.', ',')}
-      </span>
+      <div className="transaction-value-menu">
+        <span className="transaction-value">{isExpense ? `- ${formattedValue}` : `+ ${formattedValue}`}</span>
+        <div className="transaction-menu" ref={menuRef}>
+          <button onClick={() => setShowMenu(!showMenu)} className="menu-button">
+            <FaEllipsisV />
+          </button>
+          {showMenu && (
+            <div className="dropdown-menu">
+              <button onClick={handleEdit}><FaEdit /> Editar</button>
+              <button onClick={handleDelete}><FaTrash /> Excluir</button>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

@@ -2,13 +2,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { useFinances } from '../context/FinancesContext';
 import TransactionCard from '../components/TransactionCard';
 import Input from '../components/Input';
+import EditTransactionModal from '../components/EditTransactionModal';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
 const Historico = () => {
   const { token, logout } = useAuth();
+  const { allCategories, loadingCategories } = useFinances();
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,6 +22,8 @@ const Historico = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [filterType, setFilterType] = useState('all'); // 'all', 'income', 'expense'
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
 
   const fetchTransactions = useCallback(async () => {
     if (!token) {
@@ -62,6 +67,7 @@ const Historico = () => {
             value: tx.valor,
             date: date.toISOString(),
             category: tx.categoria.nome,
+            categoryId: tx.categoria.id,
             type: tx.categoria.tipo.toLowerCase(),
           };
         });
@@ -103,6 +109,17 @@ const Historico = () => {
   const handlePreviousPage = () => setPage(prev => Math.max(prev - 1, 0));
   const handleNextPage = () => setPage(prev => Math.min(prev + 1, totalPages - 1));
 
+  const handleOpenEditModal = (transaction) => {
+    setSelectedTransaction(transaction);
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setSelectedTransaction(null);
+    // Opcional: Recarregar transações para refletir mudanças
+    // fetchTransactions();
+  };
   const months = [
     { value: 1, label: 'Janeiro' }, { value: 2, label: 'Fevereiro' },
     { value: 3, label: 'Março' }, { value: 4, label: 'Abril' },
@@ -263,7 +280,11 @@ const Historico = () => {
         {loading && <p style={{ textAlign: 'center' }}>Atualizando...</p>}
         {!loading && transactions.length > 0 ? (
           transactions.map(transaction => (
-            <TransactionCard key={transaction.id} transaction={transaction} />
+            <TransactionCard
+              key={transaction.id}
+              transaction={transaction}
+              onEdit={handleOpenEditModal}
+            />
           ))
         ) : (
           !loading && <p style={{ textAlign: 'center', marginTop: '2rem' }}>Nenhuma transação encontrada com os filtros aplicados.</p>
@@ -292,6 +313,16 @@ const Historico = () => {
           </div>
         )}
       </div>
+
+      {isEditModalOpen && (
+        <EditTransactionModal
+          isOpen={isEditModalOpen}
+          onClose={handleCloseEditModal}
+          transaction={selectedTransaction}
+          allCategories={allCategories}
+          loadingCategories={loadingCategories}
+        />
+      )}
     </div>
   );
 };

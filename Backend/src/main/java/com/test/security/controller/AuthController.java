@@ -60,6 +60,6 @@ public class AuthController {
         String jwt = jwtService.generateToken(user);
 
         // Return the JWT in the response.
-        return ResponseEntity.ok(new JwtResponseDTO(jwt));
+        return ResponseEntity.ok(new JwtResponseDTO(jwt, user.getNome()));
     }
 }

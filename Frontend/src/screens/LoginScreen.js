@@ -6,10 +6,11 @@ import { Navigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Importa os ícones de olho
 
 const LoginScreen = () => {
-  const { login, isLoggedIn, loading, error } = useAuth();
+  const { login, register, isLoggedIn, loading, error } = useAuth();
   const [isLoginView, setIsLoginView] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   if (isLoggedIn) {
@@ -21,8 +22,14 @@ const LoginScreen = () => {
     if (isLoginView) {
       await login(email, password);
     } else {
-      // Aqui iria a lógica de cadastro, que pode ser adicionada no AuthContext
-      alert(`Funcionalidade de cadastro ainda não implementada. Email: ${email}`);
+      try {
+        await register(name, email, password);
+        alert('Cadastro realizado com sucesso! Por favor, faça o login.');
+        setIsLoginView(true); // Muda para a tela de login
+        setPassword(''); // Limpa a senha
+      } catch (err) {
+        // O erro já é tratado e exibido pelo AuthContext
+      }
     }
   };
 
@@ -45,6 +52,17 @@ const LoginScreen = () => {
           {isLoginView ? 'Login' : 'Cadastro'}
         </h1>
         <form onSubmit={handleAuth}>
+          {!isLoginView && (
+            <Input
+              label="Nome:"
+              id="name"
+              type="text"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              placeholder="Digite seu nome completo"
+              required
+            />
+          )}
           <Input
             label="Email:"
             id="email"
@@ -99,4 +117,3 @@ const LoginScreen = () => {
 };
 
 export default LoginScreen;
-
